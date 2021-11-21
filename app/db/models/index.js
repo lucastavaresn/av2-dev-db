@@ -1,9 +1,10 @@
 const path = require("path");
 const fs = require("fs");
+const db = require('../index')
 
-const models = {}
 
 module.exports = (()=>{
+    const models = {};
     if(!Object.keys(models).length){
         const sequelize = db.getConnection();
         const files = fs.readdirSync(__dirname);

@@ -1,5 +1,6 @@
 const {DataTypes, Sequelize} = require("sequelize");
-const name = require("path").basename(__file.replace(".model", ""),".js");
+const models = require(".");
+const name = require("path").basename(__filename.replace(".model", ""),".js");
 
 const sequelize = require("../index").getConnection();
 
@@ -33,5 +34,27 @@ const Usuario = sequelize.define(name, {
     sequelize,
     tableName: name,
 })
+
+Usuario.associate = (models) =>{
+    Usuario.hasOne(models.aluno, {
+        foreignKey: {
+            name: 'id_usuario'
+        },
+        as: 'aluno'
+    })
+    Usuario.hasOne(models.professor, {
+        foreignKey: {
+            name: 'id_usuario'
+        },
+        as: 'professor'
+    })
+
+    Usuario.hasMany(models.questao,{
+        foreignKey: {
+            name: 'id_usuario'
+        },
+        as: 'questoes'
+    })
+}
 
 module.exports = Usuario
